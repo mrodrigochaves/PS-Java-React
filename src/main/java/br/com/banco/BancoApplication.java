@@ -1,12 +1,17 @@
 package br.com.banco;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.context.annotation.Bean;
 
-@RestController
+
+import br.com.banco.model.Conta;
+import br.com.banco.model.Transferencia;
+import br.com.banco.repository.ContaRepository;
+import br.com.banco.repository.TransferenciaRepository;
+import java.time.LocalDateTime;
+
 @SpringBootApplication
 public class BancoApplication {
 
@@ -14,9 +19,23 @@ public class BancoApplication {
         SpringApplication.run(BancoApplication.class, args);
     }
 
-    @GetMapping("/hello")
-    public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return String.format("Hello %s!", name);
+    @Bean
+    CommandLineRunner init(ContaRepository contaRepository, TransferenciaRepository transferenciaRepository) {
+        return args -> {
+            Conta conta = new Conta();
+            conta.setNomeResponsavel("João da Silva");
+            contaRepository.save(conta);
+
+
+            Transferencia transferencia = new Transferencia();
+            transferencia.setDataTransferencia(LocalDateTime.now());
+            transferencia.setValor(100.00);
+            transferencia.setTipo("DEPOSITO");
+            transferencia.setNomeOperadorTransacao("Maria da Silva");
+            transferencia.setConta(conta);
+            transferenciaRepository.save(transferencia);
+
+        };
     }
 
 }
