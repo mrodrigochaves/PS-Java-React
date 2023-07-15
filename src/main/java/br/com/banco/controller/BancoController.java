@@ -1,63 +1,54 @@
 package br.com.banco.controller;
 
 import br.com.banco.dto.ContaDTO;
-import br.com.banco.dto.TransferenciaDTO;
 import br.com.banco.model.Conta;
+
 import br.com.banco.service.BancoService;
-import lombok.AllArgsConstructor;
+
 import br.com.banco.repository.ContaRepository;
 
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/conta")
-@AllArgsConstructor
+@CrossOrigin
+@RequestMapping("/api")
+
 public class BancoController {
 
+    @Autowired
     private final BancoService bancoService;
     private final ContaRepository contaRepository;
 
+    public BancoController(BancoService bancoService, ContaRepository contaRepository) {
+        this.bancoService = bancoService;
+        this.contaRepository = contaRepository;
+    }
     
-    @GetMapping
-    public List<Conta> list() {
+    @GetMapping("/contas")
+    public List<Conta> listContas() {
         return contaRepository.findAll();
     }
 
 
-    @PostMapping("/conta")
-    public ResponseEntity<String> criarConta(@RequestBody ContaDTO conta) {
-        bancoService.createConta(conta);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Conta criada com sucesso.");
+    @PostMapping
+    public ResponseEntity<ContaDTO> createConta(@RequestBody @Valid ContaDTO request) {
+        Optional<ContaDTO> response = bancoService.createConta(request);
+        return response.map(dto -> new ResponseEntity<>(dto, HttpStatus.CREATED))
+                .orElse(ResponseEntity.badRequest().build());
     }
 
-    @GetMapping("/transferencia")
-    public ResponseEntity<List<TransferenciaDTO>> listTransferencias() {
-        List<TransferenciaDTO> transferencias = bancoService.getAllTransferencias();
-        return ResponseEntity.ok(transferencias);
-    }
-
-    @PostMapping("/transferencia")
-    public ResponseEntity<String> realizarTransferencia(@RequestBody TransferenciaDTO transferencia) {
-        bancoService.createTransferencia(transferencia);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Transferência realizada com sucesso.");
-    }
-
-    @ControllerAdvice
-    public class ErrorHandler {
-
-        @ExceptionHandler(value = { NotFoundException.class })
-        public ResponseEntity<String> handleNotFoundException(NotFoundException ex) {
-         
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Conta não encontrada.");
-        }
 
         
 
-    }
+    
 }
