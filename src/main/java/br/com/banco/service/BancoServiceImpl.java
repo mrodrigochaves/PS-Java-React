@@ -33,7 +33,7 @@ public class BancoServiceImpl implements BancoService {
     }
 
     @Override
-    public Optional<ContaDTO> create(@Valid ContaDTO request) {
+    public Optional<ContaDTO> createConta(@Valid ContaDTO request) {
         Conta conta = mapper.map(request, Conta.class);
         Conta savedConta = contaRepository.saveAndFlush(conta);
         return Optional.of(mapper.map(savedConta, ContaDTO.class));
