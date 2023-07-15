@@ -2,6 +2,8 @@ package br.com.banco.service;
 
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import java.util.List;
 import br.com.banco.dto.ContaDTO;
 import br.com.banco.dto.TransferenciaDTO;
@@ -9,7 +11,7 @@ import br.com.banco.dto.TransferenciaDTO;
 public interface BancoService {
 
     // Conta
-    Optional<ContaDTO> createConta(ContaDTO request);
+    Optional<ContaDTO> createConta(@Valid ContaDTO request);
 
     List<ContaDTO> getAll();
 
