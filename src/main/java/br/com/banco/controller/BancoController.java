@@ -2,8 +2,12 @@ package br.com.banco.controller;
 
 import br.com.banco.dto.ContaDTO;
 import br.com.banco.dto.TransferenciaDTO;
+import br.com.banco.model.Conta;
 import br.com.banco.service.BancoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import br.com.banco.repository.ContaRepository;
+
+
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,21 +16,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/banco")
+@RequestMapping("/conta")
+@AllArgsConstructor
 public class BancoController {
 
     private final BancoService bancoService;
+    private final ContaRepository contaRepository;
 
-    @Autowired
-    public BancoController(BancoService bancoService) {
-        this.bancoService = bancoService;
+    
+    @GetMapping
+    public List<Conta> list() {
+        return contaRepository.findAll();
     }
 
-    @GetMapping("/conta")
-    public ResponseEntity<List<ContaDTO>> listContas() {
-        List<ContaDTO> contas = bancoService.getAll();
-        return ResponseEntity.ok(contas);
-    }
 
     @PostMapping("/conta")
     public ResponseEntity<String> criarConta(@RequestBody ContaDTO conta) {
