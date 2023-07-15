@@ -57,7 +57,7 @@ public class Transferencia {
         this.valor = valor;
     }
 
-    public void setTipo(@NonNull String tipo) {
+    public void setTipo( String tipo) {
         this.tipo = tipo;
     }
 
