@@ -5,20 +5,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+
 
 import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "conta")
 public class Conta {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id_conta", nullable = false)
     private Long id;
 
-    @Column(name = "numero", nullable = false)
+    @Column(name = "nome_responsavel", nullable = false)
     private String nomeResponsavel;
 }
