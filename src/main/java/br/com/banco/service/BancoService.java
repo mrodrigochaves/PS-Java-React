@@ -9,7 +9,7 @@ import br.com.banco.dto.TransferenciaDTO;
 public interface BancoService {
 
     // Conta
-    Optional<ContaDTO> create(ContaDTO request);
+    Optional<ContaDTO> createConta(ContaDTO request);
 
     List<ContaDTO> getAll();
 
