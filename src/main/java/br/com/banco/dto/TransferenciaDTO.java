@@ -1,9 +1,9 @@
 package br.com.banco.dto;
 
-import java.math.BigDecimal;
+
 import java.time.LocalDateTime;
 
-
+import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 import lombok.NonNull;
@@ -14,8 +14,8 @@ public class TransferenciaDTO {
     @NonNull
     private LocalDateTime dataTransferencia;
 
-    @NonNull
-    private BigDecimal valor;
+    @NotBlank
+    private double valor;
 
     @NonNull
     private String tipo;
