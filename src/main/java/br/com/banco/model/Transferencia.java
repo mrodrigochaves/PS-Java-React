@@ -1,9 +1,7 @@
 package br.com.banco.model;
 
-
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-    
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,54 +10,63 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import lombok.NonNull;
-    
+
 @Entity
-@Table(name = "transferencia")
 public class Transferencia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
-    
+
     @Column(name = "data_transferencia", nullable = false)
     private LocalDateTime dataTransferencia;
-    
-    @Column(nullable = false)
-    private BigDecimal valor;
-    
-    @Column(nullable = false)
+
+    @Column(name="valor", nullable = false)
+    private double valor;
+
+    @Column(name="tipo", nullable = false)
     private String tipo;
-    
+
     @Column(name = "nome_operador_transacao")
     private String nomeOperadorTransacao;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "conta_id", nullable = false)
     private Conta conta;
 
-
-    public void setDataTransferencia(LocalDateTime now) {
+    public Transferencia() {
     }
 
-     public void setValor(double d) {
+    public Transferencia(Long id, LocalDateTime dataTransferencia, double valor, String tipo,
+            String nomeOperadorTransacao, Conta conta) {
+        this.id = id;
+        this.dataTransferencia = dataTransferencia;
+        this.valor = valor;
+        this.tipo = tipo;
+        this.nomeOperadorTransacao = nomeOperadorTransacao;
+        this.conta = conta;
     }
 
-    public void setTipo(String string) {
+    public void setDataTransferencia(@NonNull LocalDateTime dataTransferencia) {
+        this.dataTransferencia = dataTransferencia;
     }
 
-    public void setConta(Conta conta2) {
+    public void setValor( double valor) {
+        this.valor = valor;
     }
 
-    public void setNomeOperadorTransacao(String string) {
+    public void setTipo(@NonNull String tipo) {
+        this.tipo = tipo;
     }
 
-    public void setValor(@NonNull BigDecimal valor2) {
+    public void setNomeOperadorTransacao(@NonNull String nomeOperadorTransacao) {
+        this.nomeOperadorTransacao = nomeOperadorTransacao;
+    }
+
+    public void setConta(Conta conta) {
+        this.conta = conta;
     }
 
 }
-    
-
-
-
