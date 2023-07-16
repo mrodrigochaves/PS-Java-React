@@ -9,7 +9,6 @@ import br.com.banco.model.Conta;
 import br.com.banco.model.Transferencia;
 import br.com.banco.repository.ContaRepository;
 import br.com.banco.repository.TransferenciaRepository;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,13 +19,14 @@ import org.modelmapper.ModelMapper;
 
 @Service
 public class BancoServiceImpl implements BancoService {
-    
+
     private final ContaRepository contaRepository;
     private final TransferenciaRepository transferenciaRepository;
     private ModelMapper mapper;
 
     @Autowired
-    public BancoServiceImpl(ContaRepository contaRepository, TransferenciaRepository transferenciaRepository, ModelMapper mapper) {
+    public BancoServiceImpl(ContaRepository contaRepository, TransferenciaRepository transferenciaRepository,
+            ModelMapper mapper) {
         this.contaRepository = contaRepository;
         this.transferenciaRepository = transferenciaRepository;
         this.mapper = mapper;
@@ -40,7 +40,7 @@ public class BancoServiceImpl implements BancoService {
     }
 
     @Override
-    public List<ContaDTO> getAll() {
+    public List<ContaDTO> getAllContas() {
         List<Conta> contas = contaRepository.findAll();
         return mapContasListToDTO(contas);
     }
@@ -70,7 +70,7 @@ public class BancoServiceImpl implements BancoService {
         if (contaOptional.isPresent()) {
             Conta conta = contaOptional.get();
             conta.setNomeResponsavel(request.getNomeResponsavel());
-            
+
             contaRepository.save(conta);
             return Optional.of(mapper.map(conta, ContaDTO.class));
         }
@@ -124,7 +124,7 @@ public class BancoServiceImpl implements BancoService {
             transferencia.setValor(request.getValor());
             transferencia.setTipo(request.getTipo());
             transferencia.setNomeOperadorTransacao(request.getNomeOperadorTransacao());
-            
+
             transferenciaRepository.save(transferencia);
             return Optional.of(mapper.map(transferencia, TransferenciaDTO.class));
         }
