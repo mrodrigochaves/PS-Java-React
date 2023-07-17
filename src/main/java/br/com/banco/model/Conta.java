@@ -15,7 +15,7 @@ public class Conta {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_conta", nullable = false)
+    @Column(name = "id_conta")
     private Long id;
 
     @Column(name = "nome_responsavel", nullable = false)
