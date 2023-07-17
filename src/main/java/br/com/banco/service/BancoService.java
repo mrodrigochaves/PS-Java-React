@@ -17,27 +17,12 @@ public interface BancoService {
 
     List<ContaDTO> getAllContas();
 
-    Optional<ContaDTO> getById(Long id);
-
-    Optional<ContaDTO> deleteById(Long id);
-
-    List<ContaDTO> getByResponsavel(String name);
-
-    Optional<ContaDTO> update(Long id, @Valid ContaDTO request);
+    
 
     // Transferencia
     Optional<TransferenciaDTO> createTransferencia(@Valid TransferenciaDTO request);
 
     List<TransferenciaDTO> getAllTransferencias();
 
-    Optional<TransferenciaDTO> getTransferenciaById(Long id);
-
-    Optional<TransferenciaDTO> deleteTransferenciaById(Long id);
-
-    List<TransferenciaDTO> getTransferenciasByTipo(String name);
-
-    List<TransferenciaDTO> getTransferenciasByConta(Long contaId);
-
-    Optional<TransferenciaDTO> updateTransferencia(Long id, @Valid TransferenciaDTO request);
 
 }
