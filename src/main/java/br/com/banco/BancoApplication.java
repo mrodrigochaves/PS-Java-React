@@ -2,7 +2,7 @@ package br.com.banco;
 
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -42,16 +42,18 @@ public class BancoApplication implements CommandLineRunner {
 
       
         Transferencia transferencia1 = new Transferencia();
-        transferencia1.setDataTransferencia(LocalDateTime.of(2023, 1, 1, 12, 0));
+        transferencia1.setDataTransferencia(LocalDate.of(2023, 1, 1));
         transferencia1.setValor(new BigDecimal("30895.46"));
         transferencia1.setTipo("DEPOSITO");
+        transferencia1.setNomeOperadorTransacao("Maria");
         transferencia1.setConta(conta1);
         transferenciaRepository.save(transferencia1);
 
         Transferencia transferencia2 = new Transferencia();
-        transferencia2.setDataTransferencia(LocalDateTime.of(2023, 2, 3, 9, 53, 27));
+        transferencia2.setDataTransferencia(LocalDate.of(2023, 2, 3));
         transferencia2.setValor(new BigDecimal("12.24"));
         transferencia2.setTipo("DEPOSITO");
+        transferencia2.setNomeOperadorTransacao("Joao");
         transferencia2.setConta(conta2);
         transferenciaRepository.save(transferencia2);
 
