@@ -69,5 +69,6 @@ public class Transferencia {
     public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
+    
 
 }
